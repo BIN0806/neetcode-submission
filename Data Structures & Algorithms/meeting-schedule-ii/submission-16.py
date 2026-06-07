@@ -1,0 +1,80 @@
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+
+class Solution:
+    def minMeetingRooms(self, intervals: List[Interval]) -> int:
+        # [(1, 10), (13, 15), (1,5), (6,10), (1, 5)]
+        # ----------| --
+        # -----|-----  
+        # -----|
+        # 1 2 3 4 5
+
+        # [(1, 4), (1,5), (1, 10), (6,10), (6,10), (13, 100000000)]
+        # ----- | -----
+        # -----      ----------
+        # -----------
+
+
+        # we will have a heapq of intervals
+        # have a priority queue for verllaping intervals
+        # and when we pop from priorty queue we rest the counter 
+        # repeat
+        # return the max at a all teams
+
+        # import heapq
+        # intervals.sort(key = lambda x: x.start)
+        # active_rooms = []
+
+        # for interval in intervals:
+        #     start, end = interval.start, interval.end
+        #     # ended already
+        #     if active_rooms and active_rooms[0] <= start:
+        #         heapq.heappop(active_rooms)
+        #     heapq.heappush(active_rooms, end)
+
+        # return len(active_rooms)
+ 
+
+
+        # min_rooms = 0
+        # start_times = sorted([interval.start for interval in intervals])
+        # end_times = sorted([interval.end for interval in intervals])
+
+        # n = len(intervals)
+        # l = r = 0
+        # count = 0
+        # while l < n:
+        #     if start_times[l] < end_times[r]:
+        #         l += 1
+        #         count += 1
+        #     else:
+        #         r += 1
+        #         count -= 1
+        #     min_rooms = max(min_rooms, count)
+
+        # return min_rooms
+
+
+
+
+
+
+    
+        intervals.sort(key= lambda x: x.start)
+
+        current_end_times = []
+
+        for interval in intervals:
+            heapq.heappush(current_end_times, interval.end)
+            if interval.start >= current_end_times[0]:
+                heapq.heappop(current_end_times)
+
+        return len(current_end_times)
+
+
+
